@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+      th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>this is home page </title>
+</head>
+<body>
+	<section>
+	
+		<div th:if="${session.message}" th:classappend="${session.message.type}" 
+						 class="alert text-center ms-4 me-5" role="alert">
+						  <span th:text="${session.message.content}"></span>
+						  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+		</div>
+		
+		<div class="card me-5 ms-4"  th:if=${contact}>
+			<div class="card-body">
+				<div class="container text-center">
+					<img style="height: 200px; width: 200px;" 
+					class="my_profile_picture" th:src="@{'/img/'+${contact.image}}" alt="profile photo" />
+					<h3 class="mt-3"><span th:text="${contact.name}"></span> <span th:text="${contact.secondName}"></span></h3>
+			<div class="row justify-content-center">
+    			<div class="col-auto">	
+    				<div class="table-responsive">		
+					<table class="table">
+					  <thead class="table-dark">
+					    <tr>
+					      <th scope="col">#</th>
+					      <td scope="col"><span th:text="${contact.cId}"></span></td>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">Email</th>
+					      <td scope="col"><span th:text="${contact.email}"></span></td>
+					    </tr>
+					     <tr>
+					      <th scope="row">Phone</th>
+					      <td scope="col"><span th:text="${contact.phone}"></span></td>
+					    </tr>
+					     <tr>
+					      <th scope="row">Work</th>
+					      <td scope="col"><span th:text="${contact.work}"></span></td>
+					    </tr>
+					  </tbody>
+					</table>
+    				</div>
+    			</div>
+			</div>
+					<div class="description mt-3 text-center">
+						<th:block th:utext="${contact.description}"></th:block>
+					</div>
+					<div class="container mt-3">
+						 	<a th:onclick="|deleteContact(${contact.cId})|" class="btn btn-danger btn-lg"><i class="far fa-trash-alt"></i></a>
+					      	
+					      	<form method="post" th:action="@{'/user/update-contact/'+${contact.cId}}" class="mt-2">
+					      		<!--<button class="btn btn-primary btn-sm" type="submit">Update</button> -->
+					      		<button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-edit"></i></button>
+					      	</form>
+					      	
+					</div>
+				</div>
+				</div>
+				
+			</div>
+			<h1 th:unless="${contact}" class="text-center bg-danger p-3 text-white me-5 ms-4">You are not authorized to View other Users Contacts!</h1>
+	</section>	
+</body>
+</html>

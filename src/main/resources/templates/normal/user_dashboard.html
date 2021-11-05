@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+      th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>this is home page </title>
+</head>
+<body>
+	<section>
+			<div class="container text-center">
+				<div class="card me-5 ms-4">
+					<div class="card-body my-4">
+					<div th:if="${session.message}" th:classappend="${session.message.type}" 
+						 class="alert text-center" role="alert">
+						  <span th:text="${session.message.content}"></span>
+						  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+					</div>
+						<img style="height: 200px; width: 200px;" 
+						class="my_profile_picture" th:src="@{/img/contact.png}" alt="profile photo" />
+						<p class="fst-italic fs-1">Start Adding Your Contacts!</p>
+						<a th:href="@{/user/add-contact}" class="btn btn-primary mb-4">Add New Contact</a>
+					</div>
+				</div>	
+			</div>
+			
+			<script>
+				$(document).ready(() =>{
+					$('.item').removeClass('active');
+					$('#home-link').addClass('active');
+				});
+				
+			</script>
+	</section>	
+</body>
+</html>
